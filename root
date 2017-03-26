@@ -1,0 +1,1 @@
+* * * * * /bin/bucket-sync.sh && curl -fsS --retry 3 $DEADMAN_SNITCH > /dev/null
