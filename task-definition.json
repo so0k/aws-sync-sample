@@ -1,0 +1,55 @@
+{
+    "family": "backups_td",
+    "volumes": [
+        {
+          "name": "mnt-backups",
+          "host": {
+            "sourcePath": "/mnt/nfs/backups"
+          }
+        }
+    ],
+    "containerDefinitions": [
+      {
+        "cpu": 256,
+        "essential": true,
+        "image": "so0k/aws-sync-sample",
+        "memory": 512,
+        "name": "bucket-sync",
+        "environment": [
+            {
+                "name": "AWS_ACCESS_KEY_ID",
+                "value": "${upload_key}"
+            },
+            {
+                "name": "AWS_SECRET_ACCESS_KEY",
+                "value": "${upload_secret}"
+            },
+            {
+                "name": "S3_BUCKET",
+                "value": "${upload_bucket}"
+            },
+            {
+                "name": "NFS_BACKUP",
+                "value": "${nfs_backups}"
+            },
+            {
+                "name": "DEADMAN_SNITCH",
+                "value": "${deadman_snitch}"
+            }
+        ],
+        "mountPoints": [
+            {
+              "sourceVolume": "mnt-backups",
+              "containerPath": "${nfs_backups}"
+            }
+        ],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "${log_group_name}",
+                "awslogs-region": "${log_group_region}"
+            }
+        }
+      }
+    ]
+}

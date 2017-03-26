@@ -2,7 +2,7 @@
 
 Script to sync s3 buckets to host mounts
 
-Using cron tabs to sync an s3 bucket.
+Uses cron tabs to sync an s3 bucket on a schedule.
 
 Sample `.env` file:
 ```
